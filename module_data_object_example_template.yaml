@@ -1,0 +1,1002 @@
+# Test netcdf definition in Yaml syntax
+#
+# FILE TYPE
+#
+data_object_type: nerc-mstrf-radar-mst_st_cardinal_v4-0 
+#
+# GLOBAL ATTRIBUTES
+#
+global_attributes:
+
+- Conventions:
+    data_type: str
+    value: CF-1.6
+
+- title:
+    data_type: str
+    value: |
+      Altitude profiles of Cardinal data products derived from observations
+      made by the 46.5 MHz NERC MST Radar at Aberystwyth.
+
+- description:
+    data_type: str
+    value: |
+      This file contains altitude profiles of a variety of atmospheric data
+      products related to winds, waves, turbulence, temperature gradients,
+      and humidity.
+
+- source:
+    data_type: str
+    value: |
+      The 46.5 MHz Natural Environment Research Council (NERC) 
+      Mesosphere-Stratosphere-Troposphere (MST) Radar at Capel Dewi (near
+      Aberystwyth, UK).
+
+- institution:
+    data_type: str
+    value: |
+      The Natural Environment Research Council (NERC) 
+      Mesosphere-Stratosphere-Troposphere (MST) Radar Facility at Aberystwyth,
+      http://mst.nerc.ac.uk , is funded by NERC through the National Centre
+      for Atmospheric Science (NCAS), https://www.ncas.ac.uk . It is managed
+      by RAL Space at the Science and Technology Facilities Council's (STFC)
+      Rutherford Appleton Laboratory (RAL), https://www.ralspace.stfc.ac.uk .
+
+- history:
+    data_type: str
+    value: ""
+
+- references:
+    data_type: str
+    value: |
+      The following publications mostly relate to wind data quality and 
+      representativeness. They are referred to in other global/variable
+      attributes. 
+        Thomas, L., I. Astin, and R. M. Worthington (1997). A statistical
+      study of underestimates of wind speeds by VHF radar. Ann. Geophys.,
+      15, 805-812. DOI: 10.1007/s00585-997-0805-8.
+        Hooper, D. A., and L. Thomas (1998). Complementary criteria for
+      identifying regions of intense atmospheric turbulence using lower VHF
+      radar. J. Atmos. Sol.-Terr. Phys., 60(1):49-61. 
+      DOI: 10.1016/S1364-6826(97)00054-0
+        Hooper, D. A., and J. Arvelius (2000). Monitoring of the Arctic winter
+      tropopause: A comparison of radiosonde, ozonesonde and MST radar
+      observations. Proceedings of the Ninth International Workshop on
+      Technical and Scientific Aspects of MST Radar, pages 385-388. Sci. Comm.
+      on Sol.-Terr. Phys. Secr., Boulder, Colorado, USA.
+        Hooper, D. A., J. Nash, T. Oakley, and M. Turp (2008). Validation of a 
+      new signal processing scheme for the MST radar at Aberystwyth. Ann. 
+      Geophys., 26(11), 3253-3268. DOI: 10.5194/angeo-26-3253-2008 .
+        Parton, Graham, Anthony Dore, and Geraint Vaughan (2010). A
+      climatology of mid-tropospheric mesoscale strong wind events as observed
+      by the MST radar, Aberystwyth. Meteorol. Apps., 17, 340-354, 2010. 
+      DOI: 10.1002/met.203 .
+        Hooper, David A., David M. Edwards, Gemma Holmes, Kevin Linklater, 
+      Tim Oakley, Colin Parrett, and Myles Turp (2013). The usefulness of 
+      model-comparison statistics for wind-profiling radar operators. In 
+      R. Latteck and W. Singer, editors, Proceedings of the Thirteenth
+      International Workshop on Technical and Scientific Aspects of MST
+      Radar, pages 141-150. Leibniz-Institute of Atmospheric Physics at the
+      Rostock University, Kühlungsborn, Germany. Available from 
+      http://purl.org/net/epubs/work/11539671 .
+        Lee, C. F., G. Vaughan, and D. A. Hooper (2014). Evaluation of wind
+      profiles from the NERC MST radar, Aberystwyth, UK. Atmos. Meas. Tech.,
+      7(9), 3113-3126. DOI: 10.5194/amt-7-3113-2014 .
+
+- comment: 
+    data_type: str
+    value: |
+      Information about the data are spread across a wide range of global
+      attributes. See, in particular, those with names starting with
+      'comment_'. If there are any comments specific to the data contained
+      within the file, they will be given by a global_attribute
+      'comment_specific'.
+
+- rights: 
+    data_type: str
+    value: |
+      Copyright {observation_year} Natural Environment Research Council
+      (NERC), http://www.nerc.ac.uk . Refer also to the 'license' and
+      'acknowledgement' global attributes.
+
+- license:
+    data_type: str
+    value: |
+      Use of the data is covered by the (UK) Open Government Licence,
+      http://www.nationalarchives.gov.uk/doc/open-government-licence .
+      Refer also to the 'rights' and 'acknowledgement' global attributes.
+
+- acknowledgement:
+    data_type: str
+    value: |
+      The National Centre for Atmospheric Science (NCAS), 
+      https://www.ncas.ac.uk , must be acknowledged as the data provider
+      wherever the data from this file are used. Refer also to the
+      'rights' and 'license' global attributes.
+
+- publisher:
+    data_type: str
+    value: | 
+      This data file is published by the Centre for Environmental Data Analysis
+      (CEDA), http://catalogue.ceda.ac.uk/uuid/86d964d18ac242a58e13bb8d1c849b48 .
+
+- creator_name:
+    data_type: str
+    value: David A. Hooper
+
+- creator_email:
+    data_type: str
+    value: david.hooper@ncas.ac.uk
+
+- creator_url:
+    data_type: str
+    value: http://mst.nerc.ac.uk
+
+- project:
+    data_type: str
+    value: |
+      National Centre for Atmospheric Science (NCAS) long term measurement
+      programme at Capel Dewi. 
+  
+- project_principal_investigator:
+    data_type: str
+    value: David A. Hooper
+
+- project_principal_investigator_contact:
+    data_type: str
+    value: david.hooper@ncas.ac.uk
+
+- platform_name:
+    data_type: str
+    value: capel-dewi
+
+- platform_type:
+    data_type: str
+    value: stationary_platform
+
+- platform_catalogue_url:
+    data_type: str
+    value: http://catalogue.ceda.ac.uk/uuid/8b723580e0e5426d888b273e42f76c1b
+
+- instrument_name:
+    data_type: str
+    value: nerc-mstrf-radar-mst
+
+- instrument_location:
+    data_type: str
+    value: 52 25 28.2936 N, -4 0 19.6913 E
+
+- instrument_location_keywords:
+    data_type: str
+    value: Capel Dewi, Aberystwyth, Ceredigion, Wales, UK
+
+- instrument_altitude_above_mean_sea_level_m:
+    data_type: float32
+    value: 50.0
+
+- instrument_electromagnetic_frequency_Hz:
+    data_type: float32
+    value: 46.5e+6
+
+- instrument_beam_one_way_half_power_half_width_degrees:
+    data_type: float32
+    value: 1.5
+
+- instrument_antenna_side_length_m:
+    data_type: float32
+    value: 104.12
+
+- instrument_manufacturer:
+    data_type: str
+    value: Rutherford Appleton Laboratory
+
+- instrument_model:
+    data_type: str
+    value: not applicable
+
+- instrument_serial_number:
+    data_type: str
+    value: not applicable
+
+- instrument_catalogue_url:
+    data_type: str
+    value: http://catalogue.ceda.ac.uk/uuid/6fcd4e23841b4aa0af75b8bb783011ea
+
+- calibration_sensitivity:
+    data_type: str
+    value: |
+      Although the instrument is not calibrated, measures of the horizontal 
+      wind data quality are produced on a monthly basis from comparisons
+      against model data - see Hooper et al. (2013) in the 'references' 
+      global attribute. 
+
+- calibration_certification_date:
+    data_type: str
+    value: not applicable
+
+- calibration_certification_url:
+    data_type: str
+    value: not applicable
+
+- operational_software:
+    data_type: str
+    value: mstdaq.c and tools_mst_radar_schedule.py
+
+- operational_software_version:
+    data_type: str
+    value: not applicable
+
+- observation_year:
+    data_type: int16
+    value: $observation_year
+
+- observation_month:
+    data_type: int8
+    value: $observation_month
+
+- observation_day:
+    data_type: int8
+    value: $observation_day
+
+- observation_start_time:
+    data_type: str
+    value: "{observation_start_time:%Y-%m-%dT%H:%M:%S}"
+
+- observation_end_time:
+    data_type: str
+    value: "{observation_end_time:%Y-%m-%dT%H:%M:%S}"
+
+- observation_altitude_mode:
+    data_type: str
+    value: st
+
+- observation_range_resolution_string:
+    data_type: str
+    value: "{observation_range_resolution_string}"
+
+- observation_range_resolution_number:
+    data_type: int8
+    value: $observation_range_resolution_number
+
+- observation_bottom_range_gate_number:
+    data_type: int16
+    value: $observation_bottom_range_gate_number
+
+- observation_top_range_gate_number:
+    data_type: int16
+    value: $observation_top_range_gate_number
+
+- processing_software:
+    data_type: str
+    value: module_mst_processing_v4_0.py
+
+- processing_software_version_string:
+    data_type: str
+    value: v4.0
+
+- processing_software_version_number:
+    data_type: int8
+    value: 4
+
+- processing_software_sub_version_number:
+    data_type: int8
+    value: 0
+
+- processing_nominal_smoothing_period_minutes:
+    data_type: int16
+    value: $processing_nominal_smoothing_period_minutes
+
+- featureType:
+    data_type: str
+    value: timeSeriesProfile
+
+- data_product:
+    data_type: str
+    value: cardinal
+
+- data_product_level:
+    data_type: int8
+    value: 3
+
+- comment_processing_changes:
+    data_type: str
+    value: |
+      The version 4 (v4) processing scheme is closely related to the
+      version 3 (v3) scheme described by Hooper et al. (2008) in global
+      attribute 'references'. The main difference is that the horizontal
+      wind components in the v4 Cardinal files represent time averages over
+      a nominal period given by the global attribute 
+      'processing_nominal_smoothing_period_minutes'. This reduces the
+      random measurement error of the single cycle estimates in the v3
+      Cartesian files. A second difference is the way in which values are
+      calculated for the variable 'horizontal_wind_compensation_factor',
+      which corrects for the effects of aspect sensitivity - see Thomas et al.
+      (1997), Hooper et al. (2008), and Lee et al. (2014) in the global
+      attribute 'references'. It was previously based on the (single cycle)
+      ratio of signal powers observed at zenith angles of 4.2° and 6.0°. The
+      v4 factor is based on the more-robust ratio of signal powers observed at
+      zenith angles of 0.0° and 6.0°. Moreover, the signal powers are averaged
+      over a nominal period given by the global attribute 
+      'processing_nominal_smoothing_period_minutes'. These improved estimates
+      of horizontal wind are used to calculate values of the variable 
+      'corrected_spectral_width'.
+
+- comment_instrument_location:
+    data_type: str
+    value: |
+      The values of the variables 'latitude' and 'longitude' have been
+      taken from a Global Positioning System (GPS) receiver that was placed
+      close to the centre of the MST radar's antenna array. The coordinates
+      should be accurate to within +/- 5 m. The value of global attribute
+      'instrument_altitude_above_mean_sea_level_m' has been taken from
+      the Ordnance Survey Landranger 135 map for the area. It should be
+      accurate to within +/- 5 m. 
+
+- comment_instrument_technique:
+    data_type: str
+    value: |
+      The NERC MST Radar is a 46.5 MHz pulsed Doppler radar that is used to
+      study the atmosphere. The radar returns are primarily from 'clear-air'
+      targets, i.e. structures in atmospheric refractive index that have scale
+      sizes of half the radar's wavelength (approximately 3 m) along the beam
+      pointing direction. The refractive index depends on humidity (within the
+      lowest 10 km of the atmosphere), on air density (within the lowest few
+      10s of km), and on free electron density (above 50 km). The radar return
+      signals are parameterised by their power, Doppler shift, and spectral
+      width. The signal power depends on the vertical gradient of (potential)
+      refractive index and so relates to atmospheric structure. The Doppler
+      shift depends on the radial component of the wind along the beam
+      pointing direction. Observations must be made in the vertical direction
+      and at an off-vertical angle in at least two orthogonal azimuths in
+      order for the three dimensional wind vector to be derived. The spectral
+      width depends on the intensity of any turbulence with the radar
+      observation volume. However, the values must be corrected for the
+      effects of beam-broadening, which depends on the horizontal wind speed
+      and on the radar's beam width - see global attribute
+      'comment_spectral_width'.
+
+- comment_horizontal_wind:
+    data_type: str
+    value: |
+      The horizontal wind components, given by the variables 'eastward_wind'
+      (v_E) and 'northward_wind' (v_N), have been smoothed in time by a
+      nominal amount given by the global attribute 
+      'processing_nominal_smoothing_period_minutes'. Horizontal wind speeds
+      (v_H) and directions can be derived using the following relationships:
+            v_H = sqrt(v_E^2 + v_N^2)
+          ϕ_met = 180/pi * atan2(-v_E,-v_N)
+         ϕ_vect = 180/pi * atan2(v_E,v_N)
+      where sqrt indicates the square root, ^2 indicates raised to the power
+      of 2, ϕ_met is the meteorological convention wind direction (i.e. from
+      which it is blowing), ϕ_vect is the vector convention wind direction
+      (i.e. towards which it is blowing), 180/pi is the conversion factor
+      between angles in radians and in degrees, and atan2(y,x) is the four
+      quadrant arctangent function. Note that some computing environments,
+      such as Microsoft Excel, use an atan2(x,y) function for which the order
+      of the arguments must be reversed. 
+
+- comment_vertical_beam_variables:
+    data_type: str
+    value: |
+      The values of variables 'noise_power', 'signal_power', 'upward_wind', and
+      'spectral_width' are taken from the first vertical beam dwell of each
+      observation cycle. The values of the latter 3 are taken from the range
+      gates that are closest in altitude to those at 6.0° off-vertical, which
+      are used to derive the horizontal wind components. All three variables
+      share the same quality control flag variable, 'qc_flag_vertical_beam',
+      and quality details variable, 'qc_details_vertical_beam'.
+
+- comment_dB_units:
+    data_type: str
+    value: |
+      Radar return signal powers have dimensions of watts. The values are
+      uncalibrated and are stored in dB units, P_dB, rather than linear
+      units, P_linear:
+        P_dB = 10.0 * log10(P_linear)
+      where log10 is the logarithm to base 10. The ratio of signal powers in
+      linear units is equivalent to the difference in dB units.  
+
+- comment_tropopause:
+    data_type: str
+    value: |
+      The altitude and sharpness of the tropopause - stored by variables
+      'tropopause_altitude' and 'tropopause_sharpness' - are derived from
+      altitude profiles of the vertical beam signal power following Hooper and
+      Arvelius (2000) - see global attribute 'references'. A tropopause
+      sharpness value of 0 corresponds to a signal power gradient of less than
+      2.0 dB/km, a value of 1 to less than 3.5 dB/km, a value of 2 to less than
+      5.0 dB/km, and a value of 3 to greater than 5.0 dB/km. Note that these
+      gradients are twice those used by Hooper and Arvelius (2000), which were
+      based on signal amplitudes rather than powers. The tropopause details
+      contained in the v3 Cartesian files are based on single cycle profiles
+      of signal power. The values in the v4.0 Cardinal files are the medians
+      of the v3 values taken over a nominal period given by global attribute
+      'processing_nominal_smoothing_period_minutes'. 
+
+- comment_spectral_width:
+    data_type: str
+    value: |
+      The observed spectral width, σ_obs (m s-1), for MST radar
+      observations made in the vertical pointing direction - i.e. given by
+      variable 'spectral_width' - is determined both by the spread of
+      velocities caused by turbulence, σ_turb (m s-1), and by the beam
+      broadening component, σ_beam (m s-1):
+        σ_obs^2 = σ_turb^2 + σ_beam^2
+      where ^2 represents raised to the power of 2. The beam broadening
+      component is determined by the radar's beam width, σ_0, and by the 
+      horizontal wind speed, v_H (m s-1):
+        σ_beam = v_H * sin(σ_0)
+      where
+        sin^2(σ_0) = sin^2(θ_1whphw) / (4 * ln2)
+      and θ_1whphw is the one-way half-power half-width of the beam, 
+      which is given by the global attribute 
+      'instrument_beam_one_way_half_power_half_width_degrees', and ln is the
+      natural logarithm. The values of σ_turb are stored by the variable
+      'corrected_spectral_width'. These are set to 0.0 where the beam
+      broadening component exceeds the observed spectral width. The observed
+      spectral widths have a finite minimum value and so care should be taken
+      when interpreting the corrected values under conditions of small wind
+      speeds. In order to convert from corrected spectral width to turbulence
+      eddy dissipate rate, ε (W kg-1), it is necessary to know the
+      Brunt-Vaisala frequency, ω_B (radians s-1), e.g. from radiosonde data:
+        ε = C * σ_turb^2 * ω_B
+      where C is a constant of proportionality, which is typically assumed to
+      lie between 0.25 and 0.50. Refer to Hooper and Thomas (1998) in the
+      'references' global attribute for more details.
+
+- comment_qc_flag:
+    data_type: str
+    value: |
+      For many of the variables in the v4 Cardinal files, an indication of
+      which values are considered to be reliable is given by an associated
+      quality control flag variable. The name of the latter is given by
+      the 'ancillary_variables' attribute of the main variable (and the
+      'associated_variables' attribute of a quality control flag variable
+      gives the names of the main variables associated with it). A quality
+      control flag value of 1 implies that the associated values are
+      reliable. A value of 0 is never used and any value higher than 1 implies
+      that the associated values are either unreliable or should only
+      be used with caution. Refer to the 'flag_values' and 'flag_meanings'
+      attributes of each quality control flag variable for specific details.
+      In some cases, additional quality control details are given by an
+      associated quality control details flag - see global attribute
+      'comment_qc_details'.
+
+- comment_qc_details:
+    data_type: str
+    value: |
+      In most circumstances it is best to make use of the associated quality
+      control flag variable in order to determine which variable values are
+      are considered to be reliable. The 'qc_details_vertical_beam'
+      variable contains all of the information, encoded bitwise, used to
+      determine the overall reliability. The same technique is used in the
+      radial and Cartesian data files and so not all of the following bits
+      are used for the vertical beam signal here.  
+        bit 00: 1 if the signal is available
+        bit 01: 1 if the peak smoothed power spectral density (PSD) is greater
+          than a set threshold above the noise Power Spectral Density.
+        bit 02: 1 if the signal belongs to a radial chain
+        bit 03: 1 if the signal fits overall radial continuity
+        bit 04: 1 if a secondary signal belongs to a radial chain
+        bit 05: 1 if the signal has passed a uni-directional time continuity
+          test
+        bit 06: 1 if the signal has passed a bi-directional time continuity
+          test
+      If bit number n has a value of 1, the following condition will be met:
+        qc_details_vertical_beam & 2^n == 2^n
+      where & represents a bitwise AND function and ^ represents raised to the
+      power of 2.
+#
+# VARIABLES
+#
+variables:
+
+- latitude:
+  - dimensions: [latitude]
+  - data_type: float32
+  - values: [52.424526]
+  - standard_name: 
+      data_type: str
+      value: latitude
+  - long_name: 
+      data_type: str
+      value: Instrument latitude
+  - units: 
+      data_type: str
+      value: degrees_north
+  - comment:
+      data_type: str
+      value: |
+        Refer to global attribute 'comment_instrument_location' for more
+        details about this variable.
+
+- longitude:
+  - dimensions: [longitude]
+  - data_type: float32
+  - values: [-4.0054698]
+  - standard_name: 
+      data_type: str
+      value: longitude
+  - long_name: 
+      data_type: str
+      value: Instrument longitude
+  - units: 
+      data_type: str
+      value: degrees_east
+  - comment:
+      data_type: str
+      value: |
+        Refer to global attribute 'comment_instrument_location' for more
+        details about this variable.
+
+- time:
+  - dimensions: [time]
+  - data_type: float32
+  - standard_name: 
+      data_type: str
+      value: time
+  - long_name:
+      data_type: str
+      value: Start time of observation cycle
+  - units:
+      data_type: str
+      value: seconds since {observation_date:%Y-%m-%d} 00:00:00 +00:00
+  - axis:
+      data_type: str
+      value: T
+  - comment:
+      data_type: str
+      value: |
+        The values refer to the start of observation cycles. The data
+        acquisition computer synchronises its clock using Network Time
+        Protocol (NTP).
+
+- altitude:
+  - dimensions: [altitude]
+  - data_type: float32
+  - standard_name: 
+      data_type: str
+      value: altitude
+  - long_name:
+      data_type: str
+      value: Altitude above mean sea level
+  - units: 
+      data_type: str
+      value: m
+  - axis:
+      data_type: str
+      value: Z
+  - positive:
+      data_type: str
+      value: up
+  - comment:
+      data_type: str
+      value: The values refer to the centres of the range gates.
+
+- eastward_wind:
+  - dimensions: [time, altitude]
+  - data_type: float32
+  - standard_name: 
+      data_type: str
+      value: eastward_wind
+  - long_name:
+      data_type: str
+      value: Eastward wind component
+  - units:
+      data_type: str
+      value: m s-1
+  - coordinates:
+      data_type: str
+      value: latitude longitude
+  - ancillary_variables:
+      data_type: str
+      value: qc_flag_horizontal_wind
+  - comment:
+      data_type: str
+      value: |
+        Refer to global attribute 'comment_horizontal_wind' for more details
+        about this variable. 
+
+- northward_wind:
+  - dimensions: [time, altitude]
+  - data_type: float32
+  - standard_name: 
+      data_type: str
+      value: northward_wind
+  - long_name:
+      data_type: str
+      value: Northward wind component
+  - units:
+      data_type: str
+      value: m s-1
+  - coordinates:
+      data_type: str
+      value: latitude longitude
+  - ancillary_variables:
+      data_type: str
+      value: qc_flag_horizontal_wind
+  - comment:
+      data_type: str
+      value: |
+        Refer to global attribute 'comment_horizontal_wind' for more details
+        about this variable. 
+
+- upward_wind:
+  - dimensions: [time, altitude]
+  - data_type: float32
+  - standard_name: 
+      data_type: str
+      value: upward_wind
+  - long_name:
+      data_type: str
+      value: Upward wind component
+  - units:
+      data_type: str
+      value: m s-1
+  - coordinates:
+      data_type: str
+      value: latitude longitude
+  - ancillary_variables:
+      data_type: str
+      value: qc_flag_vertical_beam
+  - v3_cartesian_file_variable_name:
+      data_type: str
+      value: vertical_beam_radial_velocity
+  - comment:
+      data_type: str
+      value: |
+        The values have an accuracy of the order of 0.1 m s-1, which means
+        that they cannot be used to identify small-magnitude synoptic-scale
+        vertical velocities. However, they are well-suited for identifying
+        mountain/convectively-generated waves and convection. Refer to global
+        attribute 'comment_vertical_beam_variables' for more details about
+        this variable. 
+
+- signal_power:
+  - dimensions: [time, altitude]
+  - data_type: float32
+  - long_name:
+      data_type: str
+      value: Vertical beam signal power
+  - units:
+      data_type: str
+      value: dB
+  - coordinates:
+      data_type: str
+      value: latitude longitude
+  - ancillary_variables:
+      data_type: str
+      value: qc_flag_vertical_beam
+  - v3_cartesian_file_variable_name:
+      data_type: str
+      value: vertical_beam_signal_power
+  - comment:
+      data_type: str
+      value: |
+        Refer to global attributes 'comment_vertical_beam_variables' and
+        'comment_dB_units' for more details about this variable.
+
+- aspect_sensitivity:
+  - dimensions: [time, altitude]
+  - data_type: float32
+  - long_name:
+      data_type: str
+      value: Ratio of vertical to 6.0° off-vertical signal powers
+  - units:
+      data_type: str
+      value: dB
+  - coordinates:
+      data_type: str
+      value: latitude longitude
+  - ancillary_variables:
+      data_type: str
+      value: qc_flag_aspect_sensitivity
+  - comment:
+      data_type: str
+      value: |
+        The values are based on the signal powers averaged across all
+        vertical beam dwells within each observation cycles and those
+        averaged across all 6.0° off-vertical dwells. Vertical beam values are
+        taken from the range gates that are closest in altitude to those at
+        6.0° off-vertical. Refer to Hooper and Thomas (1998) in the
+        'references' global attribute for more details. Refer also to
+        global attribute 'comment_dB_units'.
+
+- corrected_spectral_width:
+  - dimensions: [time, altitude]
+  - data_type: float32
+  - long_name:
+      data_type: str
+      value: Beam broadening corrected vertical beam spectral width
+  - units:
+      data_type: str
+      value: m s-1
+  - coordinates:
+      data_type: str
+      value: latitude longitude
+  - ancillary_variables:
+      data_type: str
+      value: qc_flag_corrected_spectral_width
+  - v3_cartesian_file_variable_name:
+      data_type: str
+      value: beam_broadening_corrected_spectral_width
+  - comment:
+      data_type: str
+      value: |
+        Refer to global attributes 'comment_vertical_beam_variables' and 
+        'comment_spectral_width' for more details about this variable.
+
+- tropopause_altitude:
+  - dimensions: [time]
+  - data_type: float32
+  - standard_name: 
+      data_type: str
+      value: tropopause_altitude
+  - long_name:
+      data_type: str
+      value: Radar-derived tropopause altitude
+  - units:
+      data_type: str
+      value: m
+  - coordinates:
+      data_type: str
+      value: latitude longitude
+  - comment:
+      data_type: str
+      value: |
+        Refer to global attribute 'comment_tropopause' for more details about
+        this variable.
+
+- tropopause_sharpness:
+  - dimensions: [time]
+  - data_type: int8
+  - long_name:
+      data_type: str
+      value: Radar-derived tropopause sharpness index
+  - units:
+      data_type: str
+      value: "1"
+  - coordinates:
+      data_type: str
+      value: latitude longitude
+  - flag_values:
+      data_type: int8
+      value: [0, 1, 2, 3]
+  - flag_meanings:
+      data_type: str
+      value: indefinite lower_intermediate upper_intermediate definite
+  - v3_cartesian_file_variable_name:
+      data_type: str
+      value: tropopause_sharpness_factor
+  - comment:
+      data_type: str
+      value: |
+        Refer to global attribute 'comment_tropopause' for more details about
+        this variable.
+
+- noise_power:
+  - dimensions: [time]
+  - data_type: float32
+  - long_name:
+      data_type: str
+      value: Vertical beam median spectral noise power over altitude
+  - units:
+      data_type: str
+      value: dB
+  - coordinates:
+      data_type: str
+      value: latitude longitude
+  - v3_cartesian_file_variable_name:
+      data_type: str
+      value: vertical_beam_median_noise_power
+  - comment:
+      data_type: str
+      value: |
+        The noise power spectral density is derived for each spectrum using 
+        a statistical technique - refer to Hooper et al. (2008) in the 
+        'references' global attribute. The noise power represents this value
+        integrated across the width of the spectrum. The value of this variable
+        represents the median value over the altitude profile for the first
+        vertical beam dwell of each observation cycle. It undergoes a diurnal
+        variation of a few dB as a result of variations in sky noise. Refer
+        also to global attributes 'comment_vertical_beam_variables' and
+        'comment_dB_units'.
+
+- qc_flag_horizontal_wind:
+  - dimensions: [time, altitude]
+  - data_type: int8
+  - long_name:
+      data_type: str
+      value: Quality control/reliability flag for horizontal wind variables
+  - units:
+      data_type: str
+      value: "1"
+  - coordinates:
+      data_type: str
+      value: latitude longitude
+  - flag_values:
+      data_type: int8
+      value: [1, 2]
+  - flag_meanings:
+      data_type: str
+      value: reliable not_reliable
+  - associated_variables:
+      data_type: str
+      value: eastward_wind northward_wind
+  - comment:
+      data_type: str
+      value: |
+        Refer to global attribute 'comment_qc_flag' for more details about
+        this variable. 
+
+- qc_flag_vertical_beam:
+  - dimensions: [time, altitude]
+  - data_type: int8
+  - long_name:
+      data_type: str
+      value: Quality control/reliability flag for vertical beam variables
+  - units:
+      data_type: str
+      value: "1"
+  - coordinates:
+      data_type: str
+      value: latitude longitude
+  - flag_values:
+      data_type: int8
+      value: [1, 2]
+  - flag_meanings:
+      data_type: str
+      value: reliable not_reliable
+  - associated_variables:
+      data_type: str
+      value: signal_power upward_wind spectral_width
+  - comment:
+      data_type: str
+      value: |
+        Refer to global attribute 'comment_qc_flag' for more details about
+        this variable. 
+
+- qc_details_vertical_beam:
+  - dimensions: [time, altitude]
+  - data_type: int16
+  - long_name:
+      data_type: str
+      value: Quality control/reliability details for vertical beam variables
+  - units:
+      data_type: str
+      value: "1"
+  - coordinates:
+      data_type: str
+      value: latitude longitude
+  - comment:
+      data_type: str
+      value: |
+        Refer to global attribute 'comment_qc_details' for more details about
+        this variable.
+
+- qc_flag_aspect_sensitivity:
+  - dimensions: [time, altitude]
+  - data_type: int8
+  - long_name:
+      data_type: str
+      value: Quality control/reliability flag for aspect sensitivity values
+  - units:
+      data_type: str
+      value: "1"
+  - coordinates:
+      data_type: str
+      value: latitude longitude
+  - flag_values:
+      data_type: int8
+      value: [1, 2]
+  - flag_meanings:
+      data_type: str
+      value: reliable unreliable
+  - associated_variables:
+      data_type: str
+      value: aspect_sensitivity
+  - comment:
+      data_type: str
+      value: |
+        Refer to global attribute 'comment_qc_flag' for more details about
+        this variable.
+
+- qc_flag_corrected_spectral_width:
+  - dimensions: [time, altitude]
+  - data_type: int8
+  - long_name:
+      data_type: str
+      value: Quality control/reliability flag for corrected spectral width values
+  - units:
+      data_type: str
+      value: "1"
+  - coordinates:
+      data_type: str
+      value: latitude longitude
+  - flag_values:
+      data_type: int8
+      value: [1, 2, 3]
+  - flag_meanings:
+      data_type: str
+      value: reliable overcorrected unreliable
+  - associated_variables:
+      data_type: str
+      value: corrected_spectral_width
+  - comment:
+      data_type: str
+      value: |
+        A flag value of 2 indicates that the beam broadening correction is
+        larger than the observed spectral width and so the corrected value
+        is set to zero. The associated corrected_spectral_width values are
+        still worth plotting. Refer also to global attributes 
+        'comment_qc_flag' and 'comment_spectral_width'.
+
+- horizontal_wind_compensation_factor:
+  - dimensions: [time, altitude]
+  - data_type: float32
+  - long_name:
+      data_type: str
+      value: Horizontal wind aspect sensitivity compensation factor
+  - units:
+      data_type: str
+      value: "1"
+  - coordinates:
+      data_type: str
+      value: latitude longitude
+  - v3_cartesian_file_variable_name:
+      data_type: str
+      value: horizontal_wind_theta_s_compensation_factor
+  - comment:
+      data_type: str
+      value: |
+        The values of variable 'horizontal_wind_compensation_factor' are
+        included for reference purposes only. They have already been applied
+        to the values of variables 'eastward_wind' and 'northward_wind'. Refer
+        to global attribute 'comment_processing_changes' for more details.
+
+- number_of_cycles_in_smoothing_period:
+  - dimensions: [time]
+  - data_type: int8
+  - long_name:
+      data_type: str
+      value: | 
+        The number of cycles available in the smoothing period used to derive
+        the horizontal wind components.
+  - units:
+      data_type: str
+      value: "1"
+  - coordinates:
+      data_type: str
+      value: latitude longitude
+  - comment:
+      data_type: str
+      value: |
+        Refer to global attribute 'comment_horizontal_wind' for more details
+        about this variable. 
+
+- spectral_width:
+  - dimensions: [time, altitude]
+  - data_type: float32
+  - long_name:
+      data_type: str
+      value: Vertical beam observed spectral width
+  - units:
+      data_type: str
+      value: m s-1
+  - coordinates:
+      data_type: str
+      value: latitude longitude
+  - ancillary_variables:
+      data_type: str
+      value: qc_flag_vertical_beam
+  - v3_cartesian_file_variable_name:
+      data_type: str
+      value: vertical_beam_spectral_width
+  - comment:
+      data_type: str
+      value: |
+        This variable has been included for reference purposes only. Use
+        should instead be made of the 'corrected_spectral_width' variable
+        for turbulence information. Refer also to global attributes
+        'comment_vertical_beam_variables' and 'comment_spectral_width' for
+        more details about this variable. 
