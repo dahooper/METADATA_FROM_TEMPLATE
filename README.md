@@ -1,11 +1,13 @@
 # METADATA_FROM_TEMPLATE
+A web-based version of this documentation is available at http://mst.nerc.ac.uk/data/module_data_object.html .
+
 This page provides documentation for David Hooper's module_data_object.py python software, which can be used to:
 
 * Create data objects, populated with metadata, from template files that allow substitutions - see example template file named module_data_object_example_template.yaml
 * Write such data objects to netCDF files
 * Extract data objects from netCDF files
 
-The template files are written using YAML syntax, which is easier to write than the Common Data form Language (CDL) used by the netCDF ncgen/ncdump software. The contents of the page are as follows:
+The template files are written using YAML syntax - http://yaml.org/spec/1.2/spec.html - , which is easier to write than the Common Data form Language (CDL) used by the netCDF ncgen/ncdump software. The contents of the page are as follows:
 
 * Basic usage
 * Data object structure
@@ -180,7 +182,7 @@ A template file must have 3 entries at its top level: _data_object_type_, _globa
   * Each attribute name acts as the key in a key: value pair, whose value will be a nested dictionary containing keys _data_type_ and _value_. Consequently, variable attributes are teated in an identical way to global attributes - see above - except that they have an additional level of indentation.
 
 ## Template substitution fields
-Substitutions may only be made into the _value_ of a global or variable attribute. If the corresponding _data_type_ is numerical - i.e. anything other than str - the substitution field is indicated by a substitution key immediately preceded (i.e. with no intervening white spaces) by a dollar symbol, $. See e.g. global _attribute observation_year_ in the example template file. It's definition is given as follows:
+Substitutions may only be made into the _value_ of a global or variable attribute. If the corresponding _data_type_ is numerical - i.e. anything other than str - the substitution field is indicated by a substitution key immediately preceded (i.e. with no intervening white spaces) by a dollar symbol, _$_. See e.g. global _attribute observation_year_ in the example template file. It's definition is given as follows:
 ````
 data_type: int16
 value: $observation_year
@@ -211,6 +213,71 @@ Templates that do not conform to a number of expectations will be rejected by th
   The Creator class derives the current (UTC) datetime and name of the computer itself and so there is no need to supply them. An empty value of "" has been specified in the example template file as a way of fixing its position in the order of global attributes. If no _history_ is specified, a new global attribute will be added to the end of the existing list of global attributes.
 * variables
   * Each variable must include _data_type_ and _dimensions_ 'features'. The _values_ 'feature' is optional and may only be included in the case of a coordinate variable (i.e. a variable whose single dimension has the same name as the variable, such as _latitude_ and _longitude_ in the example template file) or of a scalar variable (i.e. a variable which has no dimensions and only a single value).
-  * Each variable must include either a standard_name or long_name (data_type: str) attribute. Both may be included. In cases where of standard_name is included, no attempt is made to ensure that its value is valid.Each variable must include a units (data_type: str) attribute. Where a standard_name attribute is available, use should be made of its canonical units (or an accepted variation). No attempt is made to check that the value is correct. A value of "1" - see e.g. variable tropopause_sharpness in the example template file - must be enclosed within inverted commas in order to ensure that it is not interpreted as an integer.If a missing_value attribute is specified for a variable, it must be of the same data_type as the variable. An additional attribute _FillValue will automatically be created with the same value. Although use of the _FillValue attribute is deprecated, the netCDF recommendations suggest that it should be included for backwards compatability. Moreover, when an "empty" data object is created, the variable's values array will be filled with the value of missing_value rather than with zeros. There are no examples of the use of the missing_value attribute in the example template file.The Creator class will produce error messages to indicate any reasons for a template failing conformity tests. Appropriate changes will need to be made before the template can be used. If the template file fails being parsed by the YAML interpreter, use the method test_parse_a_template, which is described in the Creator class methods section below.The Creator class has a method show_requirements_for_template(data_object_type) for displaying the names of the dimensions for which lengths must be supplied and of the substitution keys for which values must be supplied. In the example template file, values have specified for coordinate variables latitude and longitude. Consequently it is only necessary to provide lengths for the time and altitude dimensions. A suitable dictionary for supplying these would look like the following (where the lengths are likely to vary on a case by case basis).
-lengths_of_dimensions= {    "time": 280,    "altitude": 130}A suitable dictionary for supplying substitution values would look like the following.
-substitutions = {    "observation_date: datetime.datetime(2017,8,1),    "observation_year": 2017,    "observation_month": 8,    "observation_day": 1,    "observation_start_time": datetime.datetime(2017,8,1,0,3,53),    "observation_end_time": datetime.datetime(2017,8,1,23,57,3),    "observation_range_resolution_string": "300",    "observation_range_resolution_number": 2,    "observation_bottom_range_gate_number": 18,    "observation_top_range_gate_number": 147,    "processing_nominal_smoothing_period_minutes": 33}
+  * Each variable must include either a _standard_name_ or _long_name_ (_data_type: str_) attribute. Both may be included. In cases where of standard_name is included, no attempt is made to ensure that its _value_ is valid.
+  * Each variable must include a _units_ (_data_type: str_) attribute. Where a standard_name attribute is available, use should be made of its canonical units (or an accepted variation). No attempt is made to check that the value is correct. A value of _"1"_ - see e.g. variable _tropopause_sharpness_ in the example template file - must be enclosed within inverted commas in order to ensure that it is not interpreted as an integer.
+  * If a _missing_value_ attribute is specified for a variable, it must be of the same _data_type_ as the variable. An additional attribute __FillValue_ will automatically be created with the same value. Although use of the __FillValue_ attribute is deprecated, the netCDF recommendations suggest that it should be included for backwards compatability. Moreover, when an "empty" data object is created, the variable's values array will be filled with the value of _missing_value_ rather than with zeros. There are no examples of the use of the _missing_value_ attribute in the example template file.
+  
+The Creator class will produce error messages to indicate any reasons for a template failing conformity tests. Appropriate changes will need to be made before the template can be used. If the template file fails being parsed by the YAML interpreter, use the method _test_parse_a_template_, which is described in the Creator class methods section below.
+
+The Creator class has a method _show_requirements_for_template(data_object_type)_ for displaying the names of the dimensions for which lengths must be supplied and of the substitution keys for which values must be supplied. In the example template file, values have specified for coordinate variables _latitude_ and _longitude_. Consequently it is only necessary to provide lengths for the _time_ and _altitude_ dimensions. A suitable dictionary for supplying these would look like the following (where the lengths are likely to vary on a case by case basis).
+````
+lengths_of_dimensions= {
+    "time": 280,    
+    "altitude": 130}
+````
+A suitable dictionary for supplying substitution values would look like the following.
+````
+substitutions = {
+    "observation_date: datetime.datetime(2017,8,1),
+    "observation_year": 2017,
+    "observation_month": 8,
+    "observation_day": 1,
+    "observation_start_time": datetime.datetime(2017,8,1,0,3,53),
+    "observation_end_time": datetime.datetime(2017,8,1,23,57,3),
+    "observation_range_resolution_string": "300",
+    "observation_range_resolution_number": 2,
+    "observation_bottom_range_gate_number": 18,
+    "observation_top_range_gate_number": 147,
+    "processing_nominal_smoothing_period_minutes": 33}
+````
+
+## Creator class methods
+Once an instance of the Creator class has been initialised by:
+````python
+import module_data_objectcreator = module_data_object.Creator()
+````
+the following methods are available.
+
+````python
+data_object_type = creator.load_a_template(template_file_path)
+````
+This method loads a data object template from the file whose location is given by _template_file_path_. If the template passes all conformity checks, the value of _data_object_type_ will be a string (defined in the template file) that uniquely identifies the data object type. If any error is encountered, the value of data_object_type will be an empty string.
+````python
+creator.test_parse_a_template(template_file_path)
+````
+If the Creator class's error messages indicate that a YAML parsing error has occurred, you will need to use the _test_parse_a_template_ method in order to see the parser's error messages, which are normally suppressed. These messages include the line number of the template file on which the first error occurs. This method will need to be used repeatedly until all YAML errors have been removed (watch out for tabs being used instead of spaces for indentations). Once this method indicates that no errors have been encountered, you will need to revert to the _load_a_template_ method in order to be able to make use of the template.
+````python
+creator.show_templates_available()
+````
+The Creator class is designed to be able to make use of several data object templates simultaneously. This method shows a list of of _data_object_type_ values for all templates that have been loaded.
+````python
+creator.show_details_for_template(data_object_type)
+````
+This method shows the contents of a data object template as it has been interpreted by the Creator class. It's main purpose is to check that the template has been interpreted appropriately. Substitution fields are highlighted with bold text.
+````
+creator.show_requirements_for_template(data_object_type)
+````
+This method shows a list, for the specified data object type, of the dimensions for which lengths must be supplied of the substitution keys for which values must be supplied. In the case of the latter, the method shows the data types of attribute values for which the substitutions are intended.
+````python
+data_object = creator.create_from_template(data_object_type,lengths_of_dimensions,substitutions)
+````This method returns an "empty" data object from a template, i.e. one containing all of the appropriate metadata but with variable values arrays populated with zeros (or with the value of attribute missing_value, if it has been specified). An empty dictionary will be returned if either the dictionary _lengths_of_dimensions_ does not contain entries for all of the required dimensions or dictionary _substitutions_ does not contain entries for all of the required substitutions. The programmer must populate the variable values arrays with actual data before the data object is written to a netCDF file as described in the basic usage section above.
+
+## Software dependencies
+_module_data_object.py_ is designed for use within a python 2.7 environment and relies on the following modules. All of these are available on the CEDA jasmin platform.
+* PyYAML (imported as yaml)
+* netcdf4-python (imported as netCDF4)
+* numpy
+* datetime
+* os
+* platform
+* string
