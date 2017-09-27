@@ -97,12 +97,12 @@ data_object = {
 ````
 The python lists _names_of_global_attributes_, _names_of_dimensions_, and _names_of_variables_ in the top-level dictionary indicate the order in which global attributes, variables, and dimensions have been read from (or should be written to) a netCDF file. Similarly, each variable contains a _names_of_attributes_ list.
 
-Each attribute, whether global or for a variable, has a data_type (see permissible data types section below) and a value.
+Each attribute, whether global or for a variable, has a _data_type_ (see Permissible Data Types section below) and a _value_.
 
-Each variable additionally has values. These are stored in a numpy array of an appropriate size and shape (determined by its _dimensions_) and _data_type_. Entries for these three 'features' - i.e. values, dimensions, and data_type - occur alongside those for the variable's attributes. However, their contents require one level less of nesting since they only have values.
+Each variable additionally has _values_. These are stored in a numpy array of an appropriate size and shape (determined by its _dimensions_) and _data_type_. Entries for these three 'features' - i.e. _values_, _dimensions_, and _data_type_ - occur alongside those for the variable's attributes. However, their contents require one level less of nesting since they only have values.
 * Note the use of the plural word _values_ used for the variable 'feature' rather then the singular word _value_ used for an attribute. This reflects the fact that variables typically have multiple values whereas attributes typically have just the one. However, as can be seen from the example template file, there are exceptions to both of these generalisations.
 * _dimensions_ is a python list of names of the variable's dimension variables. The lengths of these are available through the top-level dictionary _dimensions_.
-* _data_type_ as a variable 'feature' is described in the same way as the _data_type_ for an attribute - see permissible data types section below.
+* _data_type_ as a variable 'feature' is described in the same way as the _data_type_ for an attribute - see Permissible Data Types section below.
 
 ## Permissible data types
 The data object module currently only supports the data types that may be used for the netCDF3/classic standard. They are referenced (in both template files and data objects) using a string that closely resembles the corresponding numpy data type (left-hand column of the table below) rather than the netCDF data type (central column). A template error will be raised if an attempt is made to use any other data type.
