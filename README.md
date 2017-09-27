@@ -270,7 +270,8 @@ creator.show_requirements_for_template(data_object_type)
 This method shows a list, for the specified data object type, of the dimensions for which lengths must be supplied of the substitution keys for which values must be supplied. In the case of the latter, the method shows the data types of attribute values for which the substitutions are intended.
 ````python
 data_object = creator.create_from_template(data_object_type,lengths_of_dimensions,substitutions)
-````This method returns an "empty" data object from a template, i.e. one containing all of the appropriate metadata but with variable values arrays populated with zeros (or with the value of attribute missing_value, if it has been specified). An empty dictionary will be returned if either the dictionary _lengths_of_dimensions_ does not contain entries for all of the required dimensions or dictionary _substitutions_ does not contain entries for all of the required substitutions. The programmer must populate the variable values arrays with actual data before the data object is written to a netCDF file as described in the basic usage section above.
+````
+This method returns an "empty" data object from a template, i.e. one containing all of the appropriate metadata but with variable values arrays populated with zeros (or with the value of attribute missing_value, if it has been specified). An empty dictionary will be returned if either the dictionary _lengths_of_dimensions_ does not contain entries for all of the required dimensions or dictionary _substitutions_ does not contain entries for all of the required substitutions. The programmer must populate the variable values arrays with actual data before the data object is written to a netCDF file as described in the basic usage section above.
 
 ## Software dependencies
 _module_data_object.py_ is designed for use within a python 2.7 environment and relies on the following modules. All of these are available on the CEDA jasmin platform.
