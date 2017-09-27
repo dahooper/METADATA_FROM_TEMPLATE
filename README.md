@@ -182,7 +182,7 @@ A template file must have 3 entries at its top level: _data_object_type_, _globa
   * Each attribute name acts as the key in a key: value pair, whose value will be a nested dictionary containing keys _data_type_ and _value_. Consequently, variable attributes are teated in an identical way to global attributes - see above - except that they have an additional level of indentation.
 
 ## Template substitution fields
-Substitutions may only be made into the _value_ of a global or variable attribute. If the corresponding _data_type_ is numerical - i.e. anything other than str - the substitution field is indicated by a substitution key immediately preceded (i.e. with no intervening white spaces) by a dollar symbol, _$_. See e.g. global _attribute observation_year_ in the example template file. It's definition is given as follows:
+Substitutions may only be made into the _value_ of a global or variable attribute. If the corresponding _data_type_ is numerical - i.e. anything other than str - the substitution field is indicated by a substitution key immediately preceded (i.e. with no intervening white spaces) by a dollar symbol, _$_. See e.g. global attribute _observation_year_ in the example template file. It's definition is given as follows:
 ````
 data_type: int16
 value: $observation_year
