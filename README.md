@@ -109,19 +109,19 @@ The data object module currently only supports the data types that may be used f
 
 Template | netCDF | Description
 ---------|--------|------------
-str | CHAR | string, including unicode characters - see below
-int8 | BYTE | 8 bit signed integer
-int16 | SHORT | 16 bit signed integer
-int32 | INT | 32 bit signed integer
-float32 | FLOAT | 32 bit floating point
-float64 | DOUBLE | 64 bit floating point
+_str_ | CHAR | string, including unicode characters - see below
+_int8_ | BYTE | 8 bit signed integer
+_int16_ | SHORT | 16 bit signed integer
+_int32_ | INT | 32 bit signed integer
+_float32_ | FLOAT | 32 bit floating point
+_float64_ | DOUBLE | 64 bit floating point
 
 In the case of _int8_, _int16_, and _int32_ attributes, no check is made to ensure that the corresponding value falls within permissible limits.
 
 NetCDF files allow the use of unicode characters within _str_ attribute values. In fact, the netCDF4 python interface (which the module uses) returns _str_ values as unicode, irrespective of whether or not they need to be. Unicode characters may only be included in a template file in the form of a symbol, e.g. a degrees symbol should be included as ° rather than as a python code of u"\u00B0". The example template file also makes use of Greek characters such as θ, ω, and φ.
 
 ## Template file syntax
-This and the following section should be read with reference to the example template file. The template files are written using YAML syntax. This uses a mixture of indentations and context-specific special characters in order to denote structure. If the special characters are found outside of their expected context, the YAML parser will typically interpret them as ordinary characters. Entries that require the same level of nesting within a data object structure are written with the same level of indentation within a template file. The more deeply that an entry needs to be nested within a data object, the larger its level of indentation. The example template file uses an increase of 2 spaces per level of nesting, although this length is arbitrary. Empty lines can be used for visual formatting and will not affect the implied structure.
+This and the following section should be read with reference to the example template file. The template files are written using YAML syntax - http://yaml.org/spec/1.2/spec.html . This uses a mixture of indentations and context-specific special characters in order to denote structure. If the special characters are found outside of their expected context, the YAML parser will typically interpret them as ordinary characters. Entries that require the same level of nesting within a data object structure are written with the same level of indentation within a template file. The more deeply that an entry needs to be nested within a data object, the larger its level of indentation. The example template file uses an increase of 2 spaces per level of nesting, although this length is arbitrary. Empty lines can be used for visual formatting and will not affect the implied structure.
 
 Symbol | Meaning
 -------|--------
@@ -132,7 +132,7 @@ Symbol | Meaning
 \- | a hyphen (followed by one or more white spaces) indicates that the following entry belongs to a 'sequence' (in YAML-speak) or list (in python-speak). Such entries are used in the template files wherever order is important, i.e. for the names of (both global and variable) attributes and for the names of variables.
 \[ \] | where the value part of a key: value pair is series of comma-separated elements enclosed within square brackets, those elements are interpreted as belonging to a list or a one-dimensional array. In the template files, this construction is mainly used for specifying a variable's _dimensions_ (an empty pair of square brackets should be used to indicate that the variable has no dimensions). It can also be used for specifying the _values_ of a coordinate variable (i.e. a variable whose single dimension has the same name as the variable - see e.g. variables _latitude_ and _longitude_ in the example template file) or of a scalar variable (i.e. a variable which has no dimensions and only a single value). It can also be used for specifying the _value_ of an attribute such as _flag_values_, which has multiple values rather than a single one - see, for example, variable _tropopause_sharpness_ in the example template file.
 " " | where the value part of a key: value pair is enclosed within inverted commas, the value is interpreted as having a string data type. This construction is only needed where the YAML parser would otherwise interpret the value differently, e.g. where the _units_ attribute of a variable (which must be interpreted as a string) has a value of _"1"_. This would otherwise be interpreted as an integer. Another example is where the value begins with an opening curly bracket \{ in order to indicate a string substitution field. See, for example, global attribute _observation_start_time_ in the example template file. The YAML parser would otherwise interpret this as indicating the beginning of a mapping/dictionary entry.
-\{ \} | in wider YAML syntax, curly brackets are used to enclose key: value pairs for a 'mapping'/dictionary. However, in the context of template files, their use is reserved to indicate string substitution fields - see template substitution fields section below. If an opening bracket occurs at the beginning of an entry, the whole entry must be enclosed within inverted commas (see above) in order to ensure that the YAML parser interprets it appropriately.
+\{ \} | in wider YAML syntax, curly brackets are used to enclose key: value pairs for a 'mapping'/dictionary. However, in the context of template files, their use is reserved to indicate string substitution fields - see Template Substitution Fields section below. If an opening bracket occurs at the beginning of an entry, the whole entry must be enclosed within inverted commas (see above) in order to ensure that the YAML parser interprets it appropriately.
 
 ## Template file structure
 This section should be read with reference to the example template file. A generalised example is shown below.
