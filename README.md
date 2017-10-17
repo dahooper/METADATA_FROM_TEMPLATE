@@ -1,5 +1,5 @@
 # METADATA_FROM_TEMPLATE
-A web-based version of this documentation is available at http://mst.nerc.ac.uk/data/module_data_object.html .
+A web-based version of this documentation is available at http://mst.nerc.ac.uk/data/module_data_object.html  .
 
 This page provides documentation for David Hooper's module_data_object.py python software, which can be used to:
 
