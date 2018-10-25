@@ -66,8 +66,7 @@ The *module_data_object* module provides the following methods:
 
   <dt>module_data_object.<b>write_to_netcdf_file</b>(<em>data_object,
   path[, automatically_update_history]</em>)</dt>
-  <dd>Returns an exit code of 0 if the [data
-  object](#data_object_structure) <em>data_object</em> is successfully
+  <dd>Returns an exit code of 0 if the [data object](#data_object_structure) <em>data_object</em> is successfully
   written to a netCDF file whose path is given by
   <em>path</em>. Otherwise it returns an exit code of 1. If the value
   of optional input argument <em>automatically_update_history</em> is
@@ -79,8 +78,7 @@ The *module_data_object* module provides the following methods:
   computer-name"</em>. The computer name is automatically read from
   the operating system.  If the data object does not contain a
   <em>history</em> global attribute, one will be added. Note that the
-  [example data object template
-  file](https://github.com/dahooper/metadata-from-template/blob/master/module_data_object_example_template.yaml)
+  [example data object template file](https://github.com/dahooper/metadata-from-template/blob/master/module_data_object_example_template.yaml)
   contains an empty <em>history</em> global attribute as a way of
   defining its order amongst the other global attributes. Otherwise
   it will be added to the end of the list. </dd> </dl>
@@ -132,7 +130,7 @@ will need to be populated by actual data.
     <em>data_object_type</em>. This contains all of the appropriate
     metadata, but the values arrays for variables will either be
     filled with zeros or with a missing datum value if either a
-    <em>missing_value</em> or <em>\_FillValue</em> attribute has been
+    <em>missing_value</em> or <em>_FillValue</em> attribute has been
     specified for it. A python dictionary
     <em>lengths_of_dimensions</em> whose keys are the names of
     coordinate variables and whose values are the required lengths must
@@ -145,12 +143,11 @@ will need to be populated by actual data.
     included within the template, a python dictionary
     <em>substitutions</em> must be submitted as an optional input
     argument. Its keys must be those used to indicate substitution
-    fields in the template file - [see substitution field section for
-    more details](#template_substitution) - and its values must be
+    fields in the template file - [see substitution field section for more details](#template_substitution) - and its values must be
     those that will be substituted into the template. If the value of
     optional input argument <em>add_fill_value</em> is set to
     <em>True</em> (its default value is <em>False</em>), a
-    <em>\_FillValue</em> variable attribute will automatically be
+    <em>_FillValue</em> variable attribute will automatically be
     duplicated for any variable that has a <em>missing_value</em>
     attribute defined. </dd>
 
@@ -620,7 +617,7 @@ rejected by the Creator class. The major ones are as follows.
     making the associated data object self-describing. Consequently it
     is recommended that useful values are specified.
 
-* variables
+* <em>variables</em>
 
   * Each variable must include <em>data_type</em> and
     </em>dimensions</em>. The <em>values</em> 'feature' is optional
