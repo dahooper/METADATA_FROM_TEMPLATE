@@ -1,6 +1,6 @@
 # module_data_object.py
 #
-# Last updated 2017/09/18
+# Last updated 2018/10/25
 #
 # David Hooper's module for
 # 
@@ -8,20 +8,60 @@
 # 2) creating data objects from templates 
 # 3) writing data objects to netCDF files
 #
-# Usage:
-# 1) data_oject = module_data_object.extract_from_netcdf_file(netcdf_file_path)
+# For documentation, refer to 
+# https://github.com/dahooper/metadata-from-template/blob/master/README.md
 #
-# 2) creator = module_data_object.Creator()
-#    data_object_type = creator.load_a_template(template_file_path)
-#    data_object = creator.create_from_template(
-#        data_object_type,lengths_of_dimensions,substitutions)
+# Changes to the code since 2017/09/18 version
+# 
+# Changed behaviour of function extract_from_netcdf_file().
+# The previous version used to automtically return the values array for a
+# variable as a masked array if any instance of _FillValue occured within it;
+# this is the default behaviour of the underlying netCDF4 module. This
+# behaviour can now be switched off by setting the value of optional input
+# argument prevent_masked_arrays to False. 
 #
-# 3) exit_code = \
-#        module_data_object.write_to_netcdf_file(data_object,netcdf_file_path)
+# Changed behaviour of function write_to_netcdf_file().
+# This used to automatically add an entry to the history global attribute
+# (creating the attribute if it was not already defined) to state when
+# and on which computer the netCDF file had been created. Now the value of
+# optional input argument automatically_update_history must be set to True
+# in order for this to happen. 
 #
-# Refer to http://mst.nerc.ac.uk/data/module_data_object.html for online
-# documentation.
-
+# Fixed code error in function
+#   Creator.check_template_for_dimensions_and_substitutions(). 
+# This caused the software to crash if a template contained a string
+# substitution field in a variable attribute value. This problem was not
+# encountered for global attributes. It was fixed by the following code change
+#     substitution_name = attribute_value[1:]
+#  -> substitution_name = attribute["value"][1:]
+#
+# Fixed code error in function Creator.load_a_template()
+# A call was made
+#   show_dimensions_and_substitutions_for_template(
+#       self.variables["templates_file-name"][-1])
+#  Firstly, the function had been renamed and secondly, the input argument 
+#  was invalid. This section of code has now been changed to
+#   show_requirements_for_template(
+#       self.variables["templates_data-object-type"][-1])
+#
+# Fixed code error in function Creator.return_substituted_attribute_value.
+#   changed 
+#     attribute_value = data_type_object(
+#         self.variables["substitutions"][attribute_name]
+#   to 
+#     substitution_key = attribute["value"][1:]
+#     attribute_value = data_type_object(
+#         self.variables["substitutions"][substitution_key])
+#
+# Fixed code errror in function Creator.create_from_template, which caused
+# a crash if a numerical substitution was made into a 'missing_value' attribute
+# for a variable. This was fixed by delaying the routine until after all
+# variable attribute values (with substitutions where necessary) have been
+# assigned to the data object. At the same time, a change was made so that
+# the value of '_FillValue' (where provided) is used to pre-allocate the
+# variable values array. Previously this was only done if a 'missing_value'
+# attribute was supplied.
+#
 import datetime, netCDF4, numpy, os, platform, string, yaml
 #
 #########
@@ -165,8 +205,8 @@ class Creator():
                 if self.variables["no_template_errors_have_been_encountered"]:
                     self.check_template_for_dimensions_and_substitutions()
                     if self.variables["verbosity_level"] > 1:
-                        self.show_dimensions_and_substitutions_for_template(
-                            self.variables["templates_file-name"][-1])
+                        self.show_requirements_for_template(
+                            self.variables["templates_data-object-type"][-1])
                 else:
                     del self.variables["templates_data-object-type"][-1]
                     del self.variables["templates_substitution-keys"][-1]
@@ -522,6 +562,11 @@ class Creator():
 # and associated dimension variable.
 #
     def check_template_for_dimensions_and_substitutions(self):
+
+        if self.variables["verbosity_level"] > 2:
+            print "Checking template for dimensions and substitutions"
+            print "  Global attributes"
+
         number_of_global_attributes = len(
             self.objects["templates"][-1]["global_attributes"])
         global_attributes_index = 0
@@ -529,6 +574,10 @@ class Creator():
             global_attribute_name = self.objects["templates"][-1][
                 "global_attributes"][global_attributes_index].keys()[0]
             global_attribute = self.objects["templates"][-1]["global_attributes"][global_attributes_index][global_attribute_name]
+
+            if self.variables["verbosity_level"] > 2:
+                print "    %s" % global_attribute_name
+
             if global_attribute["data_type"] == "str":
                 if "$" in global_attribute["value"]:
                     self.show_a_warning("'$' based substitution cannot be used for a string value - see global attribute '%s'" % global_attribute_name)
@@ -552,6 +601,9 @@ class Creator():
 
             global_attributes_index += 1
 #
+        if self.variables["verbosity_level"] > 2:
+            print "  Variables"
+
         names_of_dimension_variables = []
         lengths_of_variables_with_values = {}
         number_of_variables = len(self.objects["templates"][-1]["variables"])
@@ -567,6 +619,9 @@ class Creator():
                 template_locations["property_index_for_feature"]["dimensions"]
             values_property_index = \
                 template_locations["property_index_for_feature"]["values"]
+
+            if self.variables["verbosity_level"] > 2:
+                print "    %s" % variable_name
 
             number_of_dimensions = len(
                 variable[dimensions_property_index]["dimensions"])
@@ -602,7 +657,7 @@ class Creator():
                             self.variables["templates_substitution-data-types"][-1].append(attribute["data_type"])
 
                 elif type(attribute["value"]) == str:
-                    substitution_name = attribute_value[1:]
+                    substitution_name = attribute["value"][1:]
                     if substitution_name not in self.variables["templates_substitution-keys"][-1]:
                         self.variables["templates_substitution-keys"][-1].append(substitution_name)
                         self.variables["templates_substitution-data-types"][-1].append(attribute["data_type"])
@@ -765,8 +820,9 @@ class Creator():
             else:
                 data_type_object = return_data_type_object(
                     attribute["data_type"])
+                substitution_key = attribute["value"][1:]
                 attribute_value = data_type_object(
-                    self.variables["substitutions"][attribute_name])
+                    self.variables["substitutions"][substitution_key])
 
         elif imported_value_data_type == list:
             data_type_object = return_data_type_object(attribute["data_type"])
@@ -859,7 +915,7 @@ class Creator():
 # encountered.
 # 
     def create_from_template(
-        self,data_object_type,lengths_of_dimensions,substitutions={}):
+            self,data_object_type,lengths_of_dimensions,substitutions={},add_fill_value=False):
 
         self.variables["no_creation_errors_have_been_encountered"] = True
         self.variables["substitutions"] = substitutions
@@ -933,7 +989,7 @@ class Creator():
                 values_shape = []
                 for dimension_name in variable[dimensions_property_index]["dimensions"]:
                     values_shape.append(data_object["dimensions"][dimension_name])
-
+#
 # Note that a variable without dimensions is expected to have only one value
 #
                 if values_shape == []:
@@ -945,17 +1001,6 @@ class Creator():
                     "dimensions": variable[dimensions_property_index]["dimensions"],
                     "values": numpy.zeros(values_shape,data_type_object),
                     "names_of_attributes": []}
-
-                if "missing_value" in template_locations["names_of_attributes"]:
-                    property_index = template_locations[
-                        "property_index_for_attribute"]["missing_value"]
-                    data_object["variables"][variable_name]["values"][:] = variable[property_index]["missing_value"]["value"]
-
-                if values_property_index != -1:
-                    values_index = 0
-                    while values_index < len(variable[values_property_index]["values"]):
-                        data_object["variables"][variable_name]["values"][values_index] = variable[values_property_index]["values"][values_index]
-                        values_index += 1
 
                 for attribute_name in template_locations["names_of_attributes"]:
                     data_object["variables"][variable_name][
@@ -970,14 +1015,30 @@ class Creator():
                         "value": self.return_substituted_attribute_value(
                             attribute_name,attribute)}
 
-                    if ((attribute_name == "missing_value") and 
-                        ("_FillValue" not in
-                         template_locations["names_of_attributes"])):
+                    if (add_fill_value and
+                        (attribute_name == "missing_value") and 
+                        ("_FillValue" not in template_locations["names_of_attributes"])):
 
                         data_object["variables"][variable_name]["names_of_attributes"].append("_FillValue")
                         data_object["variables"][variable_name]["_FillValue"] = {
                             "data_type": attribute["data_type"],
                             "value": self.return_substituted_attribute_value(attribute_name,attribute)}
+
+                if values_property_index != -1:
+                    values_index = 0
+                    while values_index < len(variable[values_property_index]["values"]):
+                        data_object["variables"][variable_name]["values"][values_index] = variable[values_property_index]["values"][values_index]
+                        values_index += 1
+
+                elif "missing_value" in data_object["variables"][variable_name]["names_of_attributes"]:
+
+                    data_object["variables"][variable_name]["values"][:] = \
+                        data_object["variables"][variable_name]["missing_value"]["value"]
+
+                elif "_FillValue" in data_object["variables"][variable_name]["names_of_attributes"]:
+
+                    data_object["variables"][variable_name]["values"][:] = \
+                        data_object["variables"][variable_name]["_FillValue"]["value"]
 
                 variables_index += 1
 
@@ -999,14 +1060,11 @@ def return_data_type_for_value(value):
 #######################
 #
 # Main function that extracts - and returns - a data object from a netCDF
-# file. The netCDF file path must be supplied as an input argument. If any
-# errors are encountered, an empty dictionary is returned. The optional input
-# argument 'verbosity_level' has a default value of 1. This just allows error
-# messages to be shown. A value of 0 will silence these. A value of 2 will
-# cause global attribute names to be shown and a value of 3 will additionally
-# cause variable attribute names to be shown. 
+# file. 
 #
-def extract_from_netcdf_file(netcdf_file_path,verbosity_level=1):
+def extract_from_netcdf_file(
+        netcdf_file_path,verbosity_level=1,prevent_masked_arrays=False):
+
     data_object = {}
     if not os.path.isfile(netcdf_file_path):
         if verbosity_level > 0:
@@ -1018,6 +1076,8 @@ def extract_from_netcdf_file(netcdf_file_path,verbosity_level=1):
             print "  Global attributes"
 
         netcdf_file = netCDF4.Dataset(netcdf_file_path)
+        if prevent_masked_arrays:
+            netcdf_file.set_auto_mask(False)
 
         data_object["names_of_global_attributes"] = []
         data_object["global_attributes"] = {}
@@ -1084,27 +1144,33 @@ def extract_from_netcdf_file(netcdf_file_path,verbosity_level=1):
 ########################################################################
 #
 # Main function - writes a data object to a netCDF file. It currently only
-# permits netCDF 3 classic files to be created. It requires the data
-# object and netCDF file path as inputs. It will create a "history" global
-# attribute, if one has not been defined, and populate it with an 
-# entry indicating when the netCDF was created. The function will return
-# an exit code of 0 if no errors have been encountered. Otherwise it will
-# return an exit code of 1. At present, this only occurs if the directory
-# part of the netcdf file path is invalid. 
+# permits netCDF 3 classic files to be created. 
 #
-def write_to_netcdf_file(data_object,netcdf_file_path,verbosity_level=1):
+def write_to_netcdf_file(
+        data_object,netcdf_file_path,automatically_update_history=False):
+
     no_errors_have_been_encountered = True
 
     directory_path = os.path.dirname(netcdf_file_path)
     if not ((directory_path == "") or os.path.isdir(directory_path)):
         no_errors_have_been_encountered = False
-        if verbosity_level > 0:
-            print "ERROR: %s.write_to_netcdf_file()" % __file__
-            print "  directory part of netcdf file path is invalid: %s" % netcdf_file_path
-    else:
+        print "ERROR: %s.write_to_netcdf_file()" % __file__
+        print "  directory part of netcdf file path (%s) is invalid" % directory_path
+
+    if not netcdf_file_path.endswith(".nc"):
+        no_errors_have_been_encountered = False
+        print "ERROR: %s.write_to_netcdf_file()" % __file__
+        print "  supplied netcdf file path does not have an 'nc' extensionvalid: %s" % netcdf_file_path
+
+    if automatically_update_history not in [True, False]:
+        no_errors_have_been_encountered = False
+        print "ERROR: %s.write_to_netcdf_file()" % __file__
+        print "  the supplied value of 'automatically_update_history' was neither True nor False"
+#
+    if no_errors_have_been_encountered:
         netcdf_file = netCDF4.Dataset(
             netcdf_file_path,"w",format="NETCDF3_CLASSIC")
-#
+
         for dimension_name in data_object["names_of_dimensions"]:
             dimension = netcdf_file.createDimension(
                 dimension_name,data_object["dimensions"][dimension_name])
@@ -1112,22 +1178,23 @@ def write_to_netcdf_file(data_object,netcdf_file_path,verbosity_level=1):
 # Create a "history" global attribute if one doesn't already exist, and 
 # update it with the current date/time for file creation.
 #
-        line_break = ""
-        if "history" in data_object["names_of_global_attributes"]:
-            if ((len(data_object["global_attributes"]["history"]["value"]) > 0)
-                and
-                not(data_object["global_attributes"]["history"]["value"].endswith("\n"))):
-                line_break = "\n"
-        else:
-            data_object["names_of_global_attributes"].append("history")
-            data_object["global_attributes"]["history"] = {
-                "data_type": "str", "value": ""}
+        if automatically_update_history:
+            line_break = ""
+            if "history" in data_object["names_of_global_attributes"]:
+                if ((len(data_object["global_attributes"]["history"]["value"]) > 0) and
+                    not(data_object["global_attributes"]["history"]["value"].endswith("\n"))):
+                    line_break = "\n"
+            else:
+                data_object["names_of_global_attributes"].append("history")
+                data_object["global_attributes"]["history"] = {
+                    "data_type": "str", "value": ""}
               
-        new_history_element = "%s%s - netcdf file created on computer %s ." % (
-            line_break,
-            datetime.datetime.utcnow().strftime("%Y-%m-%dT%H:%M:%S"),
-            platform.node())
-        data_object["global_attributes"]["history"]["value"] += new_history_element
+            new_history_element = \
+                "%s%s - netcdf file created on computer %s ." % (
+                    line_break,
+                    datetime.datetime.utcnow().strftime("%Y-%m-%dT%H:%M:%S"),
+                    platform.node())
+            data_object["global_attributes"]["history"]["value"] += new_history_element
 #    
         for attribute_name in data_object["names_of_global_attributes"]:
             netcdf_file.setncattr(

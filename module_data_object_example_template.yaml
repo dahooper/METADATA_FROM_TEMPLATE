@@ -1,6 +1,8 @@
-# Test netcdf definition in Yaml syntax
+# Example yaml-based template file to be used with David A. Hooper's
+# module_data_object.py metadata software.
+# See https://github.com/dahooper/metadata-from-template for documenttaion.
 #
-# FILE TYPE
+# DATA OBJECT TYPE
 #
 data_object_type: nerc-mstrf-radar-mst_st_cardinal_v4-0 
 #
