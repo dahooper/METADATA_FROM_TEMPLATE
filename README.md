@@ -59,8 +59,7 @@ The *module_data_object* module provides the following methods:
 
 <dl>
   <dt>module_data_object.<b>extract_from_netcdf_file</b>(<em>path</em>)</dt>
-  <dd>Returns a [data object in the form of a python
-  dictionary](#data_object_structure) that
+  <dd>Returns a [data object in the form of a python dictionary](#data_object_structure) that
   contains the contents of the netCDF file whose path is given by
   <em>path</em>. It returns an empty dictionary, i.e. {}, if <em>path</em> does
   not correspond to a netCDF file.<br><br></dd>
